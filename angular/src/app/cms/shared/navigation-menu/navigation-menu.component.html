@@ -1,0 +1,79 @@
+<nav class="navigation-menu" *ngIf="!loading">
+  <ul class="nav-list">
+    <!-- Home Page -->
+    <li *ngIf="showHomePage && homePage" class="nav-item home-item">
+      <a 
+        href="#" 
+        class="nav-link home-link"
+        (click)="onMenuItemClick('home', homePage); $event.preventDefault()"
+      >
+        <i class="fa fa-home"></i>
+        <span>{{ homePage.title }}</span>
+      </a>
+    </li>
+
+    <!-- Page Main Menu -->
+    <li class="nav-item page-main-item">
+      <a 
+        href="#" 
+        class="nav-link page-main-link"
+        (click)="onMenuItemClick('page-main', null); $event.preventDefault()"
+      >
+        <i class="fa fa-file"></i>
+        <span>Pages</span>
+      </a>
+    </li>
+
+    <!-- Categories -->
+    <li *ngIf="showCategories && categories.length > 0" class="nav-item category-item">
+      <div class="nav-section">
+        <h6 class="nav-section-title">Categories</h6>
+        <ul class="nav-sub-list">
+          <li *ngFor="let category of categories" class="nav-sub-item">
+            <a 
+              href="#" 
+              class="nav-link category-link"
+              [style.color]="category.color"
+              (click)="onMenuItemClick('category', category); $event.preventDefault()"
+            >
+              <i *ngIf="category.icon" [class]="category.icon"></i>
+              <span>{{ category.name }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <!-- Pages -->
+    <li *ngIf="showPages && publishedPages.length > 0" class="nav-item pages-item">
+      <div class="nav-section">
+        <h6 class="nav-section-title">Pages</h6>
+        <ul class="nav-sub-list">
+          <li *ngFor="let page of publishedPages" class="nav-sub-item">
+            <a 
+              href="#" 
+              class="nav-link page-link"
+              (click)="onMenuItemClick('page', page); $event.preventDefault()"
+            >
+              <i class="fa fa-file-text"></i>
+              <span>{{ page.title }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<!-- Loading State -->
+<div *ngIf="loading" class="navigation-loading">
+  <div class="spinner-border spinner-border-sm" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <span class="ml-2">Loading navigation...</span>
+</div>
+
+<!-- Empty State -->
+<div *ngIf="!loading && !homePage && publishedPages.length === 0 && categories.length === 0" class="navigation-empty">
+  <p class="text-muted">No navigation items available.</p>
+</div>

@@ -1,0 +1,244 @@
+<div class="page-edit">
+  <div class="card">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5 class="card-title mb-0">
+            {{ isEdit ? 'Edit Page' : 'Create New Page' }}
+          </h5>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- Loading State -->
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <p class="mt-2">Loading page...</p>
+      </div>
+
+      <!-- Form -->
+      <form *ngIf="!loading" [formGroup]="pageForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <!-- Main Content -->
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label for="title">Title *</label>
+              <input
+                type="text"
+                id="title"
+                class="form-control"
+                formControlName="title"
+                placeholder="Enter page title"
+                (blur)="generateSlug()"
+              />
+              <div *ngIf="getFieldError('title')" class="invalid-feedback d-block">
+                {{ getFieldError('title') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="slug">Slug *</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="slug"
+                  class="form-control"
+                  formControlName="slug"
+                  placeholder="page-url-slug"
+                />
+                <div class="input-group-append">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="generateSlug()"
+                    title="Generate from title"
+                  >
+                    <i class="fa fa-magic"></i>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="getFieldError('slug')" class="invalid-feedback d-block">
+                {{ getFieldError('slug') }}
+              </div>
+              <small class="form-text text-muted">
+                URL-friendly version of the title. Used in the page URL.
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label>Content *</label>
+              <app-content-editor
+                [content]="pageForm.get('content')?.value"
+                [isMarkdown]="pageForm.get('isMarkdown')?.value"
+                (contentChange)="onContentChange($event)"
+                (isMarkdownChange)="onIsMarkdownChange($event)"
+              ></app-content-editor>
+              <div *ngIf="getFieldError('content')" class="invalid-feedback d-block">
+                {{ getFieldError('content') }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-header">
+                <h6 class="card-title mb-0">Page Settings</h6>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="isHomePage"
+                      class="form-check-input"
+                      formControlName="isHomePage"
+                    />
+                    <label class="form-check-label" for="isHomePage">
+                      Set as Home Page
+                    </label>
+                  </div>
+                  <small class="form-text text-muted">
+                    Only one page can be the home page at a time.
+                  </small>
+                </div>
+
+                <div class="form-group">
+                  <label for="sortOrder">Sort Order</label>
+                  <input
+                    type="number"
+                    id="sortOrder"
+                    class="form-control"
+                    formControlName="sortOrder"
+                    min="0"
+                  />
+                  <div *ngIf="getFieldError('sortOrder')" class="invalid-feedback d-block">
+                    {{ getFieldError('sortOrder') }}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="author">Author</label>
+                  <input
+                    type="text"
+                    id="author"
+                    class="form-control"
+                    formControlName="author"
+                    placeholder="Page author"
+                  />
+                  <div *ngIf="getFieldError('author')" class="invalid-feedback d-block">
+                    {{ getFieldError('author') }}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="tags">Tags</label>
+                  <input
+                    type="text"
+                    id="tags"
+                    class="form-control"
+                    formControlName="tags"
+                    placeholder="tag1, tag2, tag3"
+                  />
+                  <div *ngIf="getFieldError('tags')" class="invalid-feedback d-block">
+                    {{ getFieldError('tags') }}
+                  </div>
+                  <small class="form-text text-muted">
+                    Separate tags with commas.
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <!-- SEO Settings -->
+            <div class="card mt-3">
+              <div class="card-header">
+                <h6 class="card-title mb-0">SEO Settings</h6>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="metaTitle">Meta Title</label>
+                  <input
+                    type="text"
+                    id="metaTitle"
+                    class="form-control"
+                    formControlName="metaTitle"
+                    placeholder="SEO title"
+                  />
+                  <div *ngIf="getFieldError('metaTitle')" class="invalid-feedback d-block">
+                    {{ getFieldError('metaTitle') }}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="metaDescription">Meta Description</label>
+                  <textarea
+                    id="metaDescription"
+                    class="form-control"
+                    formControlName="metaDescription"
+                    rows="3"
+                    placeholder="SEO description"
+                  ></textarea>
+                  <div *ngIf="getFieldError('metaDescription')" class="invalid-feedback d-block">
+                    {{ getFieldError('metaDescription') }}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="metaKeywords">Meta Keywords</label>
+                  <input
+                    type="text"
+                    id="metaKeywords"
+                    class="form-control"
+                    formControlName="metaKeywords"
+                    placeholder="keyword1, keyword2, keyword3"
+                  />
+                  <div *ngIf="getFieldError('metaKeywords')" class="invalid-feedback d-block">
+                    {{ getFieldError('metaKeywords') }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions mt-4">
+          <div class="row">
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="onCancel()"
+                [disabled]="saving"
+              >
+                <i class="fa fa-times"></i> Cancel
+              </button>
+            </div>
+            <div class="col-auto">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="pageForm.invalid || saving"
+              >
+                <span *ngIf="saving" class="spinner-border spinner-border-sm mr-2" role="status">
+                  <span class="sr-only">Saving...</span>
+                </span>
+                <i *ngIf="!saving" class="fa fa-save"></i>
+                {{ saving ? 'Saving...' : (isEdit ? 'Update Page' : 'Create Page') }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>AbpCMS.CMS</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="9.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AbpCMS.CMS.Application\AbpCMS.CMS.Application.csproj" />
+    <ProjectReference Include="..\AbpCMS.CMS.EntityFrameworkCore\AbpCMS.CMS.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>

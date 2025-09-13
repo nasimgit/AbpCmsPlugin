@@ -1,0 +1,66 @@
+<div class="page-view">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <p class="mt-2">Loading page...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="alert alert-danger" role="alert">
+    <i class="fa fa-exclamation-triangle"></i> {{ error }}
+  </div>
+
+  <!-- Page Content -->
+  <article *ngIf="page && !loading" class="page-content">
+    <!-- Page Header -->
+    <header class="page-header">
+      <h1 class="page-title">{{ page.title }}</h1>
+      
+      <div class="page-meta">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="meta-info">
+              <span *ngIf="page.author" class="meta-item">
+                <i class="fa fa-user"></i> {{ page.author }}
+              </span>
+              <span class="meta-item">
+                <i class="fa fa-calendar"></i> {{ page.creationTime | date:'medium' }}
+              </span>
+              <span *ngIf="page.tags" class="meta-item">
+                <i class="fa fa-tags"></i> {{ page.tags }}
+              </span>
+            </div>
+          </div>
+          <div class="col-md-4 text-right">
+            <div class="content-type-badge">
+              <span class="badge" [ngClass]="page.isMarkdown ? 'badge-info' : 'badge-primary'">
+                {{ page.isMarkdown ? 'Markdown' : 'HTML' }}
+              </span>
+              <span *ngIf="page.isHomePage" class="badge badge-warning ml-1">
+                <i class="fa fa-home"></i> Home Page
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Body -->
+    <div class="page-body">
+      <div 
+        class="content"
+        [innerHTML]="renderedContent"
+      ></div>
+    </div>
+
+    <!-- Page Footer -->
+    <footer *ngIf="page.lastModificationTime" class="page-footer">
+      <div class="text-muted small">
+        <i class="fa fa-clock"></i> 
+        Last updated: {{ page.lastModificationTime | date:'medium' }}
+      </div>
+    </footer>
+  </article>
+</div>

@@ -1,0 +1,196 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5 class="card-title mb-0">Pages</h5>
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary" (click)="createPage()">
+          <i class="fa fa-plus"></i> New Page
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <!-- Filters -->
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Filter by title or content..."
+          [(ngModel)]="filter"
+          (ngModelChange)="onFilterChange()"
+        />
+      </div>
+      <div class="col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Author"
+          [(ngModel)]="author"
+          (ngModelChange)="onFilterChange()"
+        />
+      </div>
+      <div class="col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Tags"
+          [(ngModel)]="tags"
+          (ngModelChange)="onFilterChange()"
+        />
+      </div>
+      <div class="col-md-2">
+        <select
+          class="form-control"
+          [(ngModel)]="isMarkdown"
+          (ngModelChange)="onFilterChange()"
+        >
+          <option [value]="null">All Content Types</option>
+          <option [value]="true">Markdown</option>
+          <option [value]="false">HTML</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-secondary" (click)="clearFilters()">
+          Clear Filters
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Pages Table -->
+    <div *ngIf="!loading" class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Slug</th>
+            <th>Author</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Home Page</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let page of pages">
+            <td>
+              <strong>{{ page.title }}</strong>
+              <div *ngIf="page.tags" class="text-muted small">
+                <i class="fa fa-tags"></i> {{ page.tags }}
+              </div>
+            </td>
+            <td>
+              <code>{{ page.slug }}</code>
+            </td>
+            <td>{{ page.author || '-' }}</td>
+            <td>
+              <span class="badge" [ngClass]="getStatusBadgeClass(page.isPublished)">
+                {{ getStatusText(page.isPublished) }}
+              </span>
+            </td>
+            <td>
+              <span class="badge badge-info">
+                {{ page.isMarkdown ? 'Markdown' : 'HTML' }}
+              </span>
+            </td>
+            <td>
+              <span *ngIf="page.isHomePage" class="badge badge-primary">
+                <i class="fa fa-home"></i> Home
+              </span>
+            </td>
+            <td>{{ page.creationTime | date:'short' }}</td>
+            <td>
+              <div class="btn-group" role="group">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary"
+                  (click)="viewPage(page)"
+                  title="View"
+                >
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  (click)="editPage(page)"
+                  title="Edit"
+                >
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm"
+                  [ngClass]="page.isPublished ? 'btn-warning' : 'btn-success'"
+                  (click)="togglePublish(page)"
+                  [title]="page.isPublished ? 'Unpublish' : 'Publish'"
+                >
+                  <i class="fa" [ngClass]="page.isPublished ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </button>
+                <button
+                  *ngIf="!page.isHomePage"
+                  type="button"
+                  class="btn btn-sm btn-outline-info"
+                  (click)="setAsHomePage(page)"
+                  title="Set as Home Page"
+                >
+                  <i class="fa fa-home"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="deletePage(page)"
+                  title="Delete"
+                >
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- No data message -->
+      <div *ngIf="pages.length === 0" class="text-center py-4">
+        <p class="text-muted">No pages found.</p>
+        <button type="button" class="btn btn-primary" (click)="createPage()">
+          Create your first page
+        </button>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="!loading && totalCount > pageSize" class="d-flex justify-content-between align-items-center mt-3">
+      <div class="text-muted">
+        Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ Math.min(currentPage * pageSize, totalCount) }} of {{ totalCount }} pages
+      </div>
+      <nav>
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+              Previous
+            </button>
+          </li>
+          <li class="page-item" [class.active]="currentPage === page" *ngFor="let page of getPageNumbers()">
+            <button class="page-link" (click)="onPageChange(page)">{{ page }}</button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
+            <button class="page-link" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === getTotalPages()">
+              Next
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,127 @@
+.content-editor {
+  width: 100%; // Ensure full width like other form controls
+  direction: ltr !important; // Force left-to-right text direction
+  
+  // Override any parent CSS that might cause RTL issues
+  * {
+    direction: ltr !important;
+    text-align: left !important;
+    unicode-bidi: normal !important;
+  }
+  
+  .editor-toolbar {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 0.5rem;
+    direction: ltr !important;
+  }
+
+  .btn-group .btn {
+    margin-right: 0.25rem;
+  }
+
+  .btn-group .btn:last-child {
+    margin-right: 0;
+  }
+
+  .editor-content {
+    min-height: 500px;
+    width: 100%; // Ensure full width
+
+    textarea.form-control {
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      resize: vertical;
+      width: 100%; // Ensure full width
+    }
+
+    .character-count {
+      text-align: right;
+      margin-top: 0.5rem;
+    }
+  }
+
+  // ngx-editor Styles
+  .ngx-editor-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    
+    ngx-editor-menu {
+      .NgxEditor__MenuBar {
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-bottom: none;
+        padding: 8px;
+        border-radius: 0.25rem 0.25rem 0 0;
+        
+        .NgxEditor__MenuItem {
+          margin: 0 2px;
+          
+          button {
+            border: none;
+            background: transparent;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            
+            &:hover {
+              background-color: #e9ecef;
+            }
+            
+            &.NgxEditor__MenuItem--Active {
+              background-color: #007bff;
+              color: white;
+            }
+          }
+        }
+      }
+    }
+    
+    ngx-editor {
+      .NgxEditor {
+        border: 1px solid #ced4da !important;
+        border-top: none !important;
+        border-radius: 0 0 0.25rem 0.25rem !important;
+        min-height: 500px !important;
+        max-height: none !important;
+        overflow-y: auto !important;
+        
+        .NgxEditor__Content {
+          min-height: 450px !important;
+          padding: 15px !important;
+          font-family: inherit !important;
+          font-size: 14px !important;
+          line-height: 1.5 !important;
+          direction: ltr !important;
+          text-align: left !important;
+        }
+      
+        .NgxEditor__Placeholder {
+          color: #6c757d !important;
+          font-style: italic !important;
+        }
+      }
+    }
+  }
+
+  // Character count styling
+  .character-count {
+    text-align: right;
+    margin-top: 0.5rem;
+    
+    .text-danger {
+      color: #dc3545 !important;
+    }
+    
+    .text-warning {
+      color: #ffc107 !important;
+    }
+    
+    .text-muted {
+      color: #6c757d !important;
+    }
+  }
+}

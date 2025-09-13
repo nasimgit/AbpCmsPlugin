@@ -1,0 +1,7 @@
+{
+  "modules": {
+    "AbpCMS.CMS": {
+      "path": "AbpCMS.CMS.abpmdl"
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "AbpCMS.CMS.Domain.Shared": {
+      "path": "src/AbpCMS.CMS.Domain.Shared/AbpCMS.CMS.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.Domain": {
+      "path": "src/AbpCMS.CMS.Domain/AbpCMS.CMS.Domain.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.Application.Contracts": {
+      "path": "src/AbpCMS.CMS.Application.Contracts/AbpCMS.CMS.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.Application": {
+      "path": "src/AbpCMS.CMS.Application/AbpCMS.CMS.Application.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.EntityFrameworkCore": {
+      "path": "src/AbpCMS.CMS.EntityFrameworkCore/AbpCMS.CMS.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.MongoDB": {
+      "path": "src/AbpCMS.CMS.MongoDB/AbpCMS.CMS.MongoDB.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.HttpApi": {
+      "path": "src/AbpCMS.CMS.HttpApi/AbpCMS.CMS.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.HttpApi.Client": {
+      "path": "src/AbpCMS.CMS.HttpApi.Client/AbpCMS.CMS.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.TestBase": {
+      "path": "test/AbpCMS.CMS.TestBase/AbpCMS.CMS.TestBase.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.CMS.EntityFrameworkCore.Tests": {
+      "path": "test/AbpCMS.CMS.EntityFrameworkCore.Tests/AbpCMS.CMS.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.CMS.MongoDB.Tests": {
+      "path": "test/AbpCMS.CMS.MongoDB.Tests/AbpCMS.CMS.MongoDB.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.CMS.Domain.Tests": {
+      "path": "test/AbpCMS.CMS.Domain.Tests/AbpCMS.CMS.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.CMS.Application.Tests": {
+      "path": "test/AbpCMS.CMS.Application.Tests/AbpCMS.CMS.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.CMS.HttpApi.Host": {
+      "path": "host/AbpCMS.CMS.HttpApi.Host/AbpCMS.CMS.HttpApi.Host.abppkg",
+      "folder": "host"
+    },
+    "AbpCMS.CMS.Web": {
+      "path": "src/AbpCMS.CMS.Web/AbpCMS.CMS.Web.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/AbpCMS.CMS.HttpApi.Client.ConsoleTestApp/AbpCMS.CMS.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.CMS.Web.Host": {
+      "path": "host/AbpCMS.CMS.Web.Host/AbpCMS.CMS.Web.Host.abppkg",
+      "folder": "host"
+    },
+    "AbpCMS.CMS.AuthServer": {
+      "path": "host/AbpCMS.CMS.AuthServer/AbpCMS.CMS.AuthServer.abppkg",
+      "folder": "host"
+    },
+    "AbpCMS.CMS.Host.Shared": {
+      "path": "host/AbpCMS.CMS.Host.Shared/AbpCMS.CMS.Host.Shared.abppkg",
+      "folder": "host"
+    },
+    "AbpCMS.CMS.Web.Unified": {
+      "path": "host/AbpCMS.CMS.Web.Unified/AbpCMS.CMS.Web.Unified.abppkg",
+      "folder": "host"
+    },
+    "AbpCMS.CMS.Blazor": {
+      "path": "src/AbpCMS.CMS.Blazor/AbpCMS.CMS.Blazor.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.Blazor.Host": {
+      "path": "host/AbpCMS.CMS.Blazor.Host/AbpCMS.CMS.Blazor.Host.abppkg",
+      "folder": "host"
+    },
+    "AbpCMS.CMS.Blazor.Server": {
+      "path": "src/AbpCMS.CMS.Blazor.Server/AbpCMS.CMS.Blazor.Server.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.Blazor.WebAssembly": {
+      "path": "src/AbpCMS.CMS.Blazor.WebAssembly/AbpCMS.CMS.Blazor.WebAssembly.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.CMS.Blazor.Server.Host": {
+      "path": "host/AbpCMS.CMS.Blazor.Server.Host/AbpCMS.CMS.Blazor.Server.Host.abppkg",
+      "folder": "host"
+    }
+  }
+}

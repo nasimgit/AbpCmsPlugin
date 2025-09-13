@@ -1,0 +1,165 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h5 class="card-title mb-0">Categories</h5>
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary" (click)="createCategory()">
+          <i class="fa fa-plus"></i> New Category
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <!-- Filters -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Filter by name or description..."
+          [(ngModel)]="filter"
+          (ngModelChange)="onFilterChange()"
+        />
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-secondary" (click)="clearFilters()">
+          Clear Filters
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="text-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Categories Table -->
+    <div *ngIf="!loading" class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Slug</th>
+            <th>Description</th>
+            <th>Color</th>
+            <th>Icon</th>
+            <th>Status</th>
+            <th>Sort Order</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td>
+              <div class="d-flex align-items-center">
+                <div 
+                  *ngIf="category.color" 
+                  class="color-indicator mr-2"
+                  [style.background-color]="category.color"
+                ></div>
+                <strong>{{ category.name }}</strong>
+              </div>
+            </td>
+            <td>
+              <code>{{ category.slug }}</code>
+            </td>
+            <td>
+              <span *ngIf="category.description" [title]="category.description">
+                {{ category.description.length > 50 ? category.description.substring(0, 50) + '...' : category.description }}
+              </span>
+              <span *ngIf="!category.description" class="text-muted">-</span>
+            </td>
+            <td>
+              <div *ngIf="category.color" class="d-flex align-items-center">
+                <div 
+                  class="color-preview mr-2"
+                  [style.background-color]="category.color"
+                ></div>
+                <span class="text-muted">{{ category.color }}</span>
+              </div>
+              <span *ngIf="!category.color" class="text-muted">-</span>
+            </td>
+            <td>
+              <i *ngIf="category.icon" [class]="category.icon" [style.color]="category.color"></i>
+              <span *ngIf="!category.icon" class="text-muted">-</span>
+            </td>
+            <td>
+              <span class="badge" [ngClass]="getStatusBadgeClass(category.isActive)">
+                {{ getStatusText(category.isActive) }}
+              </span>
+            </td>
+            <td>{{ category.sortOrder }}</td>
+            <td>{{ category.creationTime | date:'short' }}</td>
+            <td>
+              <div class="btn-group" role="group">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  (click)="editCategory(category)"
+                  title="Edit"
+                >
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm"
+                  [ngClass]="category.isActive ? 'btn-warning' : 'btn-success'"
+                  (click)="toggleActive(category)"
+                  [title]="category.isActive ? 'Deactivate' : 'Activate'"
+                >
+                  <i class="fa" [ngClass]="category.isActive ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="deleteCategory(category)"
+                  title="Delete"
+                >
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- No data message -->
+      <div *ngIf="categories.length === 0" class="text-center py-4">
+        <p class="text-muted">No categories found.</p>
+        <button type="button" class="btn btn-primary" (click)="createCategory()">
+          Create your first category
+        </button>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="!loading && totalCount > pageSize" class="d-flex justify-content-between align-items-center mt-3">
+      <div class="text-muted">
+        Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ Math.min(currentPage * pageSize, totalCount) }} of {{ totalCount }} categories
+      </div>
+      <nav>
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+              Previous
+            </button>
+          </li>
+          <li class="page-item" [class.active]="currentPage === page" *ngFor="let page of getPageNumbers()">
+            <button class="page-link" (click)="onPageChange(page)">{{ page }}</button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === getTotalPages()">
+            <button class="page-link" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === getTotalPages()">
+              Next
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

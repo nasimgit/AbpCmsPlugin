@@ -1,0 +1,233 @@
+<div class="category-edit">
+  <div class="card">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5 class="card-title mb-0">
+            {{ isEdit ? 'Edit Category' : 'Create New Category' }}
+          </h5>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- Loading State -->
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <p class="mt-2">Loading category...</p>
+      </div>
+
+      <!-- Form -->
+      <form *ngIf="!loading" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <!-- Main Content -->
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label for="name">Name *</label>
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                formControlName="name"
+                placeholder="Enter category name"
+                (blur)="generateSlug()"
+              />
+              <div *ngIf="getFieldError('name')" class="invalid-feedback d-block">
+                {{ getFieldError('name') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="slug">Slug *</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="slug"
+                  class="form-control"
+                  formControlName="slug"
+                  placeholder="category-url-slug"
+                />
+                <div class="input-group-append">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="generateSlug()"
+                    title="Generate from name"
+                  >
+                    <i class="fa fa-magic"></i>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="getFieldError('slug')" class="invalid-feedback d-block">
+                {{ getFieldError('slug') }}
+              </div>
+              <small class="form-text text-muted">
+                URL-friendly version of the name. Used in the category URL.
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea
+                id="description"
+                class="form-control"
+                formControlName="description"
+                rows="4"
+                placeholder="Enter category description"
+              ></textarea>
+              <div *ngIf="getFieldError('description')" class="invalid-feedback d-block">
+                {{ getFieldError('description') }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-header">
+                <h6 class="card-title mb-0">Category Settings</h6>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="color">Color</label>
+                  <div class="input-group">
+                    <input
+                      type="color"
+                      id="color"
+                      class="form-control"
+                      formControlName="color"
+                      style="width: 60px;"
+                    />
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="color"
+                      placeholder="#007bff"
+                    />
+                  </div>
+                  <div *ngIf="getFieldError('color')" class="invalid-feedback d-block">
+                    {{ getFieldError('color') }}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="icon">Icon</label>
+                  <input
+                    type="text"
+                    id="icon"
+                    class="form-control"
+                    formControlName="icon"
+                    placeholder="fa fa-folder"
+                  />
+                  <div *ngIf="getFieldError('icon')" class="invalid-feedback d-block">
+                    {{ getFieldError('icon') }}
+                  </div>
+                  <small class="form-text text-muted">
+                    FontAwesome icon class (e.g., fa fa-folder)
+                  </small>
+                </div>
+
+                <div class="form-group">
+                  <label for="sortOrder">Sort Order</label>
+                  <input
+                    type="number"
+                    id="sortOrder"
+                    class="form-control"
+                    formControlName="sortOrder"
+                    min="0"
+                  />
+                  <div *ngIf="getFieldError('sortOrder')" class="invalid-feedback d-block">
+                    {{ getFieldError('sortOrder') }}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="parentId">Parent Category</label>
+                  <select
+                    id="parentId"
+                    class="form-control"
+                    formControlName="parentId"
+                  >
+                    <option value="">No parent (root category)</option>
+                    <option *ngFor="let category of availableCategories" [value]="category.id">
+                      {{ category.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Preview -->
+            <div class="card mt-3">
+              <div class="card-header">
+                <h6 class="card-title mb-0">Preview</h6>
+              </div>
+              <div class="card-body">
+                <div class="category-preview">
+                  <div class="d-flex align-items-center">
+                    <div 
+                      *ngIf="categoryForm.get('color')?.value" 
+                      class="color-indicator mr-2"
+                      [style.background-color]="categoryForm.get('color')?.value"
+                    ></div>
+                    <i 
+                      *ngIf="categoryForm.get('icon')?.value" 
+                      [class]="categoryForm.get('icon')?.value"
+                      [style.color]="categoryForm.get('color')?.value"
+                      class="mr-2"
+                    ></i>
+                    <span class="font-weight-bold">
+                      {{ categoryForm.get('name')?.value || 'Category Name' }}
+                    </span>
+                  </div>
+                  <div *ngIf="categoryForm.get('description')?.value" class="text-muted small mt-1">
+                    {{ categoryForm.get('description')?.value }}
+                  </div>
+                  <div class="text-muted small mt-1">
+                    <code>{{ categoryForm.get('slug')?.value || 'category-slug' }}</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions mt-4">
+          <div class="row">
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="onCancel()"
+                [disabled]="saving"
+              >
+                <i class="fa fa-times"></i> Cancel
+              </button>
+            </div>
+            <div class="col-auto">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="categoryForm.invalid || saving"
+              >
+                <span *ngIf="saving" class="spinner-border spinner-border-sm mr-2" role="status">
+                  <span class="sr-only">Saving...</span>
+                </span>
+                <i *ngIf="!saving" class="fa fa-save"></i>
+                {{ saving ? 'Saving...' : (isEdit ? 'Update Category' : 'Create Category') }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

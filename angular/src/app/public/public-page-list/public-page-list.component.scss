@@ -1,0 +1,50 @@
+.card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.card-title a {
+  color: #007bff;
+  text-decoration: none;
+  
+  &:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+}
+
+.badge {
+  font-size: 0.75em;
+}
+
+.pagination {
+  .page-link {
+    color: #007bff;
+    border-color: #dee2e6;
+    
+    &:hover {
+      color: #0056b3;
+      background-color: #e9ecef;
+      border-color: #dee2e6;
+    }
+  }
+  
+  .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+}
+
+.input-group {
+  .form-control {
+    border-right: 0;
+  }
+  
+  .btn {
+    border-left: 0;
+  }
+}

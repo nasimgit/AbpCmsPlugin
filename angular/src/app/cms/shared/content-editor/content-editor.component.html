@@ -1,0 +1,70 @@
+<div class="content-editor">
+  <div class="editor-toolbar mb-2">
+    <div class="btn-group" role="group">
+      <button
+        type="button"
+        class="btn btn-sm"
+        [ngClass]="isMarkdown ? 'btn-outline-secondary' : 'btn-primary'"
+        (click)="toggleEditorType()"
+      >
+        <i class="fa fa-code"></i> {{ isMarkdown ? 'Switch to WYSIWYG' : 'Switch to Markdown' }}
+      </button>
+      
+      <button
+        type="button"
+        class="btn btn-sm btn-outline-info"
+        (click)="previewContent()"
+        title="Preview"
+      >
+        <i class="fa fa-eye"></i> Preview
+      </button>
+
+    </div>
+  </div>
+
+  <div class="editor-content">
+    <!-- ngx-editor WYSIWYG Editor -->
+    <div *ngIf="!isMarkdown" class="ngx-editor-container">
+      <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+      <ngx-editor
+        [editor]="editor"
+        [formControl]="contentControl"
+        [placeholder]="placeholder"
+        [editable]="true"
+        [minHeight]="'500px'"
+        [maxHeight]="'auto'">
+      </ngx-editor>
+      <div class="character-count mt-2">
+        <small class="text-muted">
+          <span [ngClass]="getCharacterCountClass()">
+            {{ getCharacterCount() }} / 8,000 characters
+          </span>
+        </small>
+      </div>
+    </div>
+
+    <!-- Markdown Editor -->
+    <div *ngIf="isMarkdown">
+      <textarea
+        class="form-control"
+        rows="15"
+        [placeholder]="placeholder"
+        [formControl]="contentControl"
+      ></textarea>
+      <small class="form-text text-muted">
+        <i class="fa fa-info-circle"></i>
+        Use Markdown syntax for formatting. 
+        <a href="https://www.markdownguide.org/basic-syntax/" target="_blank" class="text-info">
+          Learn Markdown syntax
+        </a>
+      </small>
+      <div class="character-count mt-2">
+        <small class="text-muted">
+          <span [ngClass]="getCharacterCountClass()">
+            {{ getCharacterCount() }} / 8,000 characters
+          </span>
+        </small>
+      </div>
+    </div>
+  </div>
+</div>

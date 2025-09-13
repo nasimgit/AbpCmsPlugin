@@ -1,0 +1,66 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <!-- Home Page Content -->
+      <div *ngIf="homePage" class="home-page-content mb-5">
+        <h1 class="display-4 mb-4">{{ homePage.title }}</h1>
+        <div class="content" [innerHTML]="homePage.content"></div>
+      </div>
+
+      <!-- Welcome Message if no home page -->
+      <div *ngIf="!homePage" class="welcome-message mb-5">
+        <h1 class="display-4 mb-4">Welcome to Our CMS</h1>
+        <p class="lead">Discover our latest content and published pages.</p>
+      </div>
+
+      <!-- Recent Pages Section -->
+      <div class="recent-pages">
+        <h2 class="mb-4">Recent Pages</h2>
+        
+        <div *ngIf="loading" class="text-center">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+        <div *ngIf="!loading && recentPages.length === 0" class="alert alert-info">
+          No published pages available yet.
+        </div>
+
+        <div *ngIf="!loading && recentPages.length > 0" class="row">
+          <div *ngFor="let page of recentPages" class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a [routerLink]="['/public/page', page.slug]" class="text-decoration-none">
+                    {{ page.title }}
+                  </a>
+                </h5>
+                <p class="card-text" *ngIf="page.metaDescription">
+                  {{ page.metaDescription }}
+                </p>
+                <div class="card-footer bg-transparent border-0 p-0">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar-alt me-1"></i>
+                    {{ page.creationTime | date:'mediumDate' }}
+                    <span *ngIf="page.author" class="ms-2">
+                      <i class="fas fa-user me-1"></i>
+                      {{ page.author }}
+                    </span>
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View All Pages Link -->
+        <div *ngIf="!loading && recentPages.length > 0" class="text-center mt-4">
+          <a [routerLink]="['/public/pages']" class="btn btn-primary">
+            View All Pages
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

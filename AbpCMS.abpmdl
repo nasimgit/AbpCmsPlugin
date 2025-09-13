@@ -1,0 +1,102 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "4.2.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.Account": {
+      "version": "9.2.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "9.2.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.Identity": {
+      "version": "9.2.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "9.2.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "9.2.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "9.2.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "9.2.0",
+      "isInstalled": true
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "plugins": {}
+    }
+  },
+  "packages": {
+    "AbpCMS.Application": {
+      "path": "src/AbpCMS.Application/AbpCMS.Application.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.Application.Tests": {
+      "path": "test/AbpCMS.Application.Tests/AbpCMS.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.Domain.Shared": {
+      "path": "src/AbpCMS.Domain.Shared/AbpCMS.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.Application.Contracts": {
+      "path": "src/AbpCMS.Application.Contracts/AbpCMS.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.HttpApi": {
+      "path": "src/AbpCMS.HttpApi/AbpCMS.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.HttpApi.Client": {
+      "path": "src/AbpCMS.HttpApi.Client/AbpCMS.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.EntityFrameworkCore.Tests": {
+      "path": "test/AbpCMS.EntityFrameworkCore.Tests/AbpCMS.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.EntityFrameworkCore": {
+      "path": "src/AbpCMS.EntityFrameworkCore/AbpCMS.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.TestBase": {
+      "path": "test/AbpCMS.TestBase/AbpCMS.TestBase.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.Domain.Tests": {
+      "path": "test/AbpCMS.Domain.Tests/AbpCMS.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/AbpCMS.HttpApi.Client.ConsoleTestApp/AbpCMS.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "AbpCMS.DbMigrator": {
+      "path": "src/AbpCMS.DbMigrator/AbpCMS.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.HttpApi.Host": {
+      "path": "src/AbpCMS.HttpApi.Host/AbpCMS.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "AbpCMS.Domain": {
+      "path": "src/AbpCMS.Domain/AbpCMS.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}
